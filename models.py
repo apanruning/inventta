@@ -1,32 +1,30 @@
-from django.db import models
-from django.template.defaultfilters import slugify
-from datetime import datetime
-from tagging.fields import TagField
-from django.contrib import admin
+# -*- coding: utf-8 -*-
 
-class Leak(models.Model):
-    slug = models.SlugField(editable=False, unique=True)
-    description = models.TextField()
-    author = models.CharField(max_length=20, default='Anonymous')
-    created = models.DateTimeField(auto_now_add=True, editable = False)
-    changed = models.DateTimeField(auto_now=True, editable = False)
-    tags = TagField(default='random')
-    metadata = models.TextField()
-    
-    def __unicode__(self):
-        return self.slug
+from flaskext.couchdb import Document, Mapping
+from flaskext.couchdb import TextField, DateTimeField, ListField, ViewField
 
-    @models.permalink
-    def get_absolute_url(self):
-        return ('leak_detail', [self.id])
-        
-    def save(self):
-        date = datetime.now().strftime("%d%H%M%S")
-        self.slug = slugify(self.description[:42]+date)
-        super(Leak, self).save()
-        
-class LeakAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'tags','author', 'created')
-    list_filter = ('author', 'created')
 
-admin.site.register(Leak, LeakAdmin)
+class Leak(Document):
+    doc_type = 'leak'
+    description = TextField()
+    author = TextField(default='Anonymous')
+    created = DateTimeField()
+    changed = DateTimeField()
+    tags = ListField(TextField(default='random'))
+    metadata = TextField()
+
+    tagged = ViewField('leaks', '''\
+        function (doc) {
+            if (doc.doc_type == 'leak') {
+                doc.tags.forEach(function (tag) {
+                    emit(tag, doc);
+                });
+            };
+        }''')
+
+
+class Author(Document):
+    doc_type = 'author'
+    description = TextField(default='Anonymous')
+    email = TextField()
+

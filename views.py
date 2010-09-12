@@ -1,67 +1,33 @@
-from django.conf import settings
-from django.utils import simplejson as json
-from django.contrib.auth.models import User
-from django.views.generic import list_detail, simple
+# -*- coding: utf-8 -*-
 
-from ltmo.forms import LeakForm
-from ltmo.models import Leak
-def index(request):
-    author = request.GET.get('author',None)
-    tag = request.GET.get('tag',None)
-    queryset = Leak.objects.all().order_by('-created')
-    if author:
-        queryset = queryset.filter(author__icontains = author)
-        try:
-            author = User.objects.get(username__icontains = author)
-        except User.DoesNotExist:
-            author = None
-    if tag:
-        queryset = queryset.filter(tags__icontains=tag)
+import os
+import json
 
+from flask import request, session, g, redirect, url_for, render_template, flash
+from flaskext.couchdb import CouchDBManager, ViewDefinition
+from github2.client import Github
+from ltmo import app
+from models import Leak
+
+app.config.from_envvar('APP_SETTINGS')
+
+manager = CouchDBManager()
+manager.setup(app)
+
+@app.context_processor
+def about():
+    github = Github(username=app.config['GITHUB_USER'], api_token=app.config['GITHUB_API_TOKEN'])
+    f = open(os.path.join(app.config['BASE_DIR'], 'ABOUT'), 'r')
+    return {
+        'about':str(f.read()),
+        'repository':github.repos.show("tutuca/ltmo")
+    }
+    
+@app.route('/', methods=['POST', 'GET'])
+def index():
+    import ipdb; ipdb.set_trace()
     if request.method == 'POST':
-        post = json.loads(request.raw_post_data)
-        form = LeakForm(post)
-        if form.is_valid():
-            leak = form.save()
-        return simple.direct_to_template(
-            request,
-            'success.json', 
-            mimetype='application/json',
-            extra_context={
-                'form':form,
-            }
-        )
-    return list_detail.object_list(
-        request,
-        queryset,
-        template_name='index.html',
-        extra_context={
-            'author':author,
-            'tag':tag,
-        }
-    )
-
-def leak_detail(request, object_id):
-    if request.method == 'POST':
-        post = json.loads(request.raw_post_data)
-        form = LeakForm(post, instance=Leak.objects.get(id=object_id))
-
-        if form.is_valid():
-            leak = form.save()
-        return simple.direct_to_template(
-            request,
-            'success.json', 
-            mimetype='application/json',
-            extra_context={
-                'form':form,
-            }
-        )
-
-    queryset = Leak.objects.all()
-    return list_detail.object_detail(
-        request,
-        queryset,
-        object_id,
-        template_name = 'detail.html'
-    )
-
+       leak = Leak(**json.loads(request.data))
+       leak.store()
+       
+    return render_template('index.html')
