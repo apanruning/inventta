@@ -1,9 +1,6 @@
 PIL
-django
-django-tagging
 markdown2
-django-markdown2
-django-pagination
-psycopg2
+flask
+Flask-CouchDB
 github2
 
