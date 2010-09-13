@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
 
+BASE_DIR = os.path.dirname(__file__)
+
 DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
-
-BASE_DIR = os.path.dirname(__file__)
 
 ADMINS = (
     ('etnalubma', 'francisco.herrero@gmail.com'),
