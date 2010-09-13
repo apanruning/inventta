@@ -83,7 +83,7 @@ a img{
     border: 0;
 }
 em {
-    font: italic "Georgia-MS", Georgia, serif;
+    font: italic 100% "Georgia-MS", Georgia, serif;
 }
 img {
     display:block;
@@ -114,6 +114,7 @@ h2 {
 }
 #banner-header {
     float:right;
+    margin: 0.5em 0;
 }
 #banner-content {
     text-align:center;
