@@ -53,9 +53,9 @@ details {
     display:block;
     padding:0.5em;
     color: #555;
-    margin: 0 -1em;
 }
 aside {
+    text-align: left;
     width: 24em;
     float: right;
     font-size:80%;

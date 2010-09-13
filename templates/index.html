@@ -44,8 +44,7 @@
     {% for object in object_list %}
         <article>
         {# XXX: necesita ser parseado por markdown #}
-        {{object.key}}
-        {{object.description|urlize}}
+        {{object.description|markdown}}
         {# tags_for_object object as tag_list %#}
         <details><a href="/?author={{object.author}}">{{object.author}}</a>, {{object.created}}, {% for tag in tag_list %}<a href="/?tag={{tag}}" class="tags">{{tag}}</a>, {%endfor%}{{object.metadata}}</details>
         </article>
@@ -62,6 +61,7 @@
                 <script type="text/javascript"
                 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
             </script>
+        </div>
         {% endif %}
     {% else %}
         <h2>Nadie derramó nada aún</h2>
@@ -70,8 +70,7 @@
     {% endblock %}
     </section>
     <aside>
-        {# XXX: necesita ser parseado por markdown #}
-        <pre>{{about|safe}}</pre>
+        {{about|markdown}}
         
         <h3>Nube</h3>    
         {#

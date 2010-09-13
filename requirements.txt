@@ -1,6 +1,4 @@
 PIL
-markdown2
 flask
-Flask-CouchDB
-github2
-
+couchdb
+flask-markdown
