@@ -1,4 +1,6 @@
 PIL
+psycopg2
 flask
 couchdb
 flask-markdown
+flask-sqlalchemy

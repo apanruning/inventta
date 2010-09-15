@@ -15,7 +15,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-COUCHDB_SERVER = 'http://localhost:5984/'
+SQLALCHEMY_DATABASE_URI = 'sqlite://%s/ltmo.db' % BASE_DIR
 
 COUCHDB_DATABASE = 'ltmo'
 
