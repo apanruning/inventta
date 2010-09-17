@@ -27,8 +27,9 @@ def index():
     from models import Leak
     object_list = Leak.query.all()
     if request.method == 'POST':
+        data = json.loads(request.data)
         import ipdb; ipdb.set_trace()
-        leak = Leak(request.data)      
+        leak = Leak(data)      
         return render_template('success.json')
          
     return render_template('index.html', object_list=object_list)
