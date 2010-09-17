@@ -70,7 +70,11 @@
     {% endblock %}
     </section>
     <aside>
-        {{about|markdown}}
+<h3>¿Qué es lo que observa?</h3>
+<p>Nunca hay suficiente redundancia para garantizar la continuidad de la información.</p>
+<p>Este es un experimento, una herramienta para evitar perder cosas que en algún momento nos resultaron interesantes.
+Hay un <a href="http://github.com/tutuca/ltmo/raw/master/bin/spill.py" target="_blank">script de linea de comandos</a> que te deja entrar un mensaje y enviarlo a esta web.</p>
+<p>El código es libre y se explica solo. Así que no preguntes por ayuda o explicaciones, nosotros tampoco sabemos de que se trata</p>
         
         <h3>Nube</h3>    
         {#
@@ -102,7 +106,8 @@
             <li><a href="/?tag={{tag}}">{{tag}}</a> ({{tag.count}})</li>
         {% endfor %}
         </ul>        
-        <div >
+        <h3>Publicidad</h3>
+        <div>
         <script>
         new TWTR.Widget({
           version: 2,
@@ -136,7 +141,11 @@
         </div>
     </aside>
     </div>
-    <footer><p><a href="http://twitter.com/lossingoil">Seguinos en twitter</a> o <a href="mailto://loosingoil@gmail.com">mandanos a trabajar</a>, pero igual revisá el <a href="http://github.com/tutuca/ltmo">Código fuente</a> </p></footer>
+    <footer>
+        <p><a href="http://twitter.com/lossingoil">Seguinos en twitter</a> o <a href="mailto://loosingtoomuchoil@gmail.com">mandanos a trabajar</a>, pero igual revisá el <a href="http://github.com/tutuca/ltmo">Código fuente</a> y si te quedás con ganas date una vuelta por <a href="irc://irc.freenode.net/ltmo">#ltmo en freenode</a>.</p>
+        <p>Hecho en Argentina con <a href="http://flask.pocoo.org/">Flask</a>, SQLALchemy, Python y mucho, MUCHO aceite patito.</p>
+    
+    </footer>
 <!-- VP -->
 </body>
 <script type="text/javascript">

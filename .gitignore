@@ -3,5 +3,6 @@
 *.db
 *.tar.gz
 etc/*
+ltmo.egg-info/
 local_settings.py
 
