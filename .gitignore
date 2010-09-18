@@ -5,4 +5,5 @@
 etc/*
 ltmo.egg-info/
 local_settings.py
+src/*
 
