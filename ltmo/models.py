@@ -14,23 +14,27 @@ class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     email = db.Column(db.String(), unique=True)
+
+    def __repr__(self):
+        return self.name
     
 class Leak(db.Model):
     __tablename__ = 'leaks'
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.Text)
-    created = db.Column(db.DateTime, default=datetime.now())
-    tags = db.relationship('Tag', secondary='leak_tags', 
-        backref=db.backref('leaks', lazy='dynamic'))
-
+    created = db.Column(db.DateTime)
+    tags = db.Column(db.String(length=50))
+    author = db.Column(db.String(length=50))
+    def __init__(self, description, tags, author, **args):
+        self.description = description
+        self.tags = tags
+        self.author = author
+        self.created = datetime.now()
+        
     def __repr__(self):
         return do_striptags(markdown(self.description))[:150]
-
-leak_tags = db.Table('leak_tags', db.Model.metadata,
-    db.Column('leak_id', db.Integer, 
-              db.ForeignKey('leaks.id', ondelete='CASCADE')),
-    db.Column('tag_id', db.Integer,
-              db.ForeignKey('tags.id', ondelete='CASCADE')))
+    
+    
 
 class Tag(db.Model):
     '''
@@ -52,13 +56,15 @@ class Tag(db.Model):
     
     def __init__(self, name):
         self.name = name
-    
-    def leaks_count(self):
-        """Return the number of posts with this tag"""
-        return self.leaks.count()
-    
+        
     def __repr__(self):
-        return self.name
+        return self.name  
+        
+#    def leaks_count(self):
+#        """Return the number of posts with this tag"""
+#        return self.leaks.count()
+    
+
     
 def syncdb(app):
     with app.test_request_context():
