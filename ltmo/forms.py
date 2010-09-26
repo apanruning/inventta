@@ -1,9 +1,9 @@
 from ltmo.models import Leak
-from flaskext.fungiform import Form, TextField, Multiple, \
-     Mapping, IntegerField, CommaSeparated
-
+from flaskext.fungiform import Form, TextField, CommaSeparated
+     
 class LeakForm(Form):
-    description = TextField('Description')
-    tags = CommaSeparated()
-    author = IntegerField()
+    description = TextField('description')
+    tags = CommaSeparated(TextField('tag'))
+    author = TextField('author')
+    
     

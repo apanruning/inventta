@@ -15,3 +15,4 @@ Markdown(app)
     
 import ltmo.views
 import ltmo.models
+import ltmo.forms
