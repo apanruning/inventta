@@ -1,6 +1,7 @@
 PIL
 psycopg2
 flask
-couchdb
 flask-markdown
 flask-sqlalchemy
+
+git+http://github.com/mitsuhiko/flask-fungiform.git
