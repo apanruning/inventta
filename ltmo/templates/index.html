@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% import 'banners.html' as banner %}
 <html lang='es'>
 <head>
     <meta charset="utf-8" />
@@ -6,27 +7,14 @@
     <meta name="description" content="LTMO, un sitio para procastinar en todos los niveles que sea imaginable." />
     <meta name="google-site-verification" content="GzD0PcJhPHGZ1BcTySo8BLEqEQNObvIqqMXSjqVeh4w" />
 
-    <link title="LTMO - Derrames publicados recientemente" href="/feed/" type="application/rss+xml" rel="alternate">
+    <link title="LTMO - Derrames publicados recientemente" href="/feed" type="application/rss+xml" rel="alternate">
     <link rel="stylesheet" href="/media/style.css" type="text/css" media="screen" />    
 
     <script src="http://widgets.twimg.com/j/2/widget.js"></script>
 </head>
 <body>
 <header>
-    <div id="banner-header">
-            <script type="text/javascript"><!--
-            google_ad_client = "pub-3539830246651089";
-            /* 468x60, creado 13/09/10 */
-            google_ad_slot = "2149396589";
-            google_ad_width = 468;
-            google_ad_height = 60;
-            //-->
-            </script>
-            <script type="text/javascript"
-            src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
-    </div>  
-
+    {{banner.header()}}
     <h1 id="logo"><a href="http://{{request.get_host}}">LTMO</a></h1>
     <p id="tagline"><em>un rincón para los amigos</em></p>
 </header>
@@ -46,22 +34,10 @@
         {# XXX: necesita ser parseado por markdown #}
         {{object.description|markdown}}
         {# tags_for_object object as tag_list %#}
-        <details><a href="/?author={{object.author}}">{{object.author}}</a>, {{object.created}}, {% for tag in tag_list %}<a href="/?tag={{tag}}" class="tags">{{tag}}</a>, {%endfor%}{{object.metadata}}</details>
+        <details><a href="/?author={{object.author}}">{{object.author}}</a>, {{object.created}}, {% for tag in tag_list %}<a href="/?tag={{tag}}" class="tags">{{tag}}</a>, {%endfor%}{{object.leak_metadata}}</details>
         </article>
         {% if loop.index == 5 %}
-        <div id="banner-content">
-            <script type="text/javascript"><!--
-                google_ad_client = "pub-3539830246651089";
-                /* 468x60, creado 26/08/10 */
-                google_ad_slot = "7764155477";
-                google_ad_width = 468;
-                google_ad_height = 60;
-                //-->
-                </script>
-                <script type="text/javascript"
-                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
-        </div>
+        {{banner.content()}}
         {% endif %}
     {% else %}
         <h2>Nadie derramó nada aún</h2>
@@ -87,19 +63,7 @@ Hay un <a href="http://github.com/tutuca/ltmo/raw/master/bin/spill.py" target="_
         {% tags_for_model ltmo.Leak as leak_tags with counts %}
         #}
         
-        <div id="banner-aside">
-            <script type="text/javascript"><!--
-            google_ad_client = "pub-3539830246651089";
-            /* 300x250, creado 26/08/10 */
-            google_ad_slot = "2985450362";
-            google_ad_width = 300;
-            google_ad_height = 250;
-            //-->
-            </script>
-            <script type="text/javascript"
-            src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
-        </div>
+        
         <h3>Tags</h3>    
         <ul>
         {% for tag in leak_tags %}
@@ -107,38 +71,8 @@ Hay un <a href="http://github.com/tutuca/ltmo/raw/master/bin/spill.py" target="_
         {% endfor %}
         </ul>        
         <h3>Publicidad</h3>
-        <div>
-        <script>
-        new TWTR.Widget({
-          version: 2,
-          type: 'profile',
-          rpp: 3,
-          interval: 6000,
-          width: 'auto',
-          height: 400,
-          theme: {
-            shell: {
-              background: '#ffffff',
-              color: '#333333'
-            },
-            tweets: {
-              background: '#FFCC00',
-              color: '#333333',
-              links: '#000000'
-            }
-          },
-          features: {
-            scrollbar: false,
-            loop: false,
-            live: false,
-            hashtags: true,
-            timestamp: true,
-            avatars: false,
-            behavior: 'all'
-          }
-        }).render().setUser('lossingoil').start();            
-        </script>
-        </div>
+        {{banner.aside()}}
+        {{banner.twitter()}}
     </aside>
     </div>
     <footer>
@@ -146,7 +80,10 @@ Hay un <a href="http://github.com/tutuca/ltmo/raw/master/bin/spill.py" target="_
         <p>Hecho en Argentina con <a href="http://flask.pocoo.org/">Flask</a>, SQLALchemy, Python y mucho, MUCHO aceite patito.</p>
     
     </footer>
-<!-- VP -->
+<!-- 
+   P
+   V
+ -->
 </body>
 <script type="text/javascript">
 
