@@ -8,7 +8,7 @@ from django.contrib import admin
 from django.template.defaultfilters import striptags, slugify
 from markdown import markdown
 
-class Leak(models.Model):
+class Idea(models.Model):
     slug = models.SlugField(editable=False, blank=True, null=True)
     title = models.CharField(max_length=126, blank=True, null=True)
     description = models.TextField()
@@ -24,7 +24,7 @@ class Leak(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('leak_detail', [parse_tag_input(self.tags)[0], self.id])
+        return ('idea_detail', [parse_tag_input(self.tags)[0], self.id])
 
     def save(self):
         self.rendered = markdown(
@@ -33,10 +33,10 @@ class Leak(models.Model):
         )
         self.tags = ','.join([slugify(x) for x in parse_tag_input(self.tags)])
         self.slug = '%s-%s' %(slugify(self.title[:30]) or 'sin-titulo', self.pk)
-        super(Leak, self).save()
+        super(Idea, self).save()
         
-class LeakAdmin(admin.ModelAdmin):
+class IdeaAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'tags','author', 'created')
     list_filter = ('author', 'created')
 
-admin.site.register(Leak, LeakAdmin)
+admin.site.register(Idea, IdeaAdmin)

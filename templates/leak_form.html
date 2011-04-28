@@ -1,4 +1,4 @@
-<form id="leak-form" action="{% url leak_new %}" method="post" {% if not form.errors %}class="hide"{% endif %}>
+<form id="idea-form" action="{% url idea_new %}" method="post" {% if not form.errors %}class="hide"{% endif %}>
     {% if not user.is_anonymous %}
     <input type="hidden" id="id_{{form.author.name}}" name="{{form.author.name}}" value="{{user}}" />
     {% endif %}
@@ -9,7 +9,7 @@
         <tbody>
             <tr><td>*itálicas*</td><td><em>itálicas</em></td></tr>
             <tr><td>**negritas**</td><td><b>negritas</b></td></tr>
-            <tr><td>[ltmo!](http://ltmo.com.ar)</td><td><a href="http://ltmo.com.ar">ltmo!</a></td></tr>
+            <tr><td>[link](http://inventta.com.ar)</td><td><a href="http://inventta.com.ar">link</a></td></tr>
             <tr><td>* item 1<br>* item 2<br></td><td><ul><li>item 1</li><li>item 2</li></ul></td></tr>
             <tr><td>&gt; texto citado</td><td><blockquote>texto citado</blockquote></td></tr>
     </table>
@@ -31,7 +31,7 @@
     </section>
     <div class="clear submit">
         <input name="save" type="submit" value="listo" /> 
-        <a href="#leak-form" class="control">Cerrar</a> 
+        <a href="#idea-form" class="control">Cerrar</a> 
 
     </div>
 

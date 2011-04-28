@@ -17,7 +17,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'ltmo.db'),
+        'NAME': os.path.join(BASE_DIR, 'invetta.db'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -35,7 +35,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-ROOT_URLCONF = 'ltmo.urls'
+ROOT_URLCONF = 'invetta.urls'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -104,7 +104,7 @@ INSTALLED_APPS = (
     'pagination',
     'tagging',
     'banners',
-    'ltmo',
+    'invetta',
 )
 
 try:

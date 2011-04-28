@@ -1,11 +1,11 @@
 from django import forms
 from tagging.forms import TagField
 
-from ltmo.models import Leak
+from inventta.models import Idea
 
 
-class LeakForm(forms.ModelForm):
+class IdeaForm(forms.ModelForm):
     tags = TagField(required=True)    
     class Meta:
-        model = Leak
+        model = Idea
         exclude = ['rendered',]

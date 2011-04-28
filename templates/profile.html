@@ -3,14 +3,12 @@
 {% block title %}
 {{author}}
 {% endblock %}
-{% block logo %}
-    <a href="http://{{request.get_host}}" title="Volver a la raiz">ltmo/</a><a href="/~{{ author }}">~{{author}}</a> ({{object_list.count}})
-{% endblock %}
-{% block content %}
 
+{% block content %}
+    <h1><a href="/~{{ author }}">~{{author}}</a> ({{object_list.count}})</h1>
     {% autopaginate object_list 10%}
     {% for object in object_list %}
-        {% include 'leak.html' %}
+        {% include 'idea.html' %}
         {% if forloop.counter == 4 %}{% pop_slot 'content' %}{% endif %}
     {% if forloop.counter == 5 %}{% pop_slot 'content' %}{% endif %}
     {% endfor %}

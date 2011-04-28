@@ -23,12 +23,12 @@
         $('.control').click(function(){
             target = $(this).attr('href');
             $(target).toggle('blind', 300);
-            if (target === '#leak-form'){
+            if (target === '#idea-form'){
                 window.setTimeout(function(){
                     $('#id_description').focus();
-                    $('#leak-form').bind( "keydown", function(event) {
+                    $('#idea-form').bind( "keydown", function(event) {
 			                if ( event.keyCode === $.ui.keyCode.ESCAPE) {
-				                $('#leak-form').hide('blind', 300)
+				                $('#idea-form').hide('blind', 300)
 				                               .unbind('keydown');
 			                }
 		                });
@@ -42,13 +42,13 @@
         $('.edit').click(function(){
             url = $(this).attr('href');
             $.getJSON(url, function(data){
-                $('#leak-form').attr('action', url);
-                form_fields = $('#leak-form :input');
+                $('#idea-form').attr('action', url);
+                form_fields = $('#idea-form :input');
                 for (x in data) {
                     $('#id_'+x).val(data[x]);
                 }
             });
-            $('#new-leak').click();
+            $('#new-idea').click();
             return false;
         })
         $('#login-form').submit(function(){

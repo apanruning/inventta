@@ -3,12 +3,12 @@
 <html lang='es'>
 <head>
     <meta charset="utf-8" />
-    <title>ltmo . {% block title %}Igual que a Scioli, a veces se nos va la mano{% endblock %}</title>
+    <title>invetta . {% block title %}Igual que a Scioli, a veces se nos va la mano{% endblock %}</title>
     <link rel="icon" type="image/png" href="/static/favicon.ico" />
 
-    <meta name="description" content="LTMO, un sitio para procastinar en todos los niveles que sea imaginable." />
+    <meta name="description" content="invetta, un sitio para procastinar en todos los niveles que sea imaginable." />
     <meta name="google-site-verification" content="GzD0PcJhPHGZ1BcTySo8BLEqEQNObvIqqMXSjqVeh4w" />
-    <link title="LTMO - Derrames publicados recientemente" href="/feed/" type="application/rss+xml" rel="alternate">
+    <link title="invetta" href="/feed/" type="application/rss+xml" rel="alternate">
     <link rel="stylesheet" href="/static/css/style.css" type="text/css" static="screen" />    
     <link rel="stylesheet" href="/static/css/code.css" type="text/css" static="screen" />    
     <script src="/static/js/jquery.js"></script>
@@ -28,24 +28,18 @@
 <header>
     <nav>
     {% if form and user.is_authenticated %}
-    <a href="#leak-form" id="new-leak" class="control" title="Nunca sobra un poco de aceite">+</a>      
-    {% endif %}  
-    <a href="/help" title="Ayudaaaaaaa">?</a>
-    {% if not user.is_authenticated %}
-    <a href="#login-form" class="control" title="Entrar">~</a>
-    {% else %}
+    <a href="#idea-form" id="new-idea" class="control" title="Nunca sobra un poco de aceite">+</a>      
     <a href="/out" title="Salir">..</a>
-    {% endif %}
+    {% endif %}  
     </nav>
     <h1 id="logo">
     {% block logo %}
-    <a href="http://{{request.get_host}}" title="Bienvenido">ltmo/</a>
+    <a href="http://{{request.get_host}}" title="Bienvenido">invetta</a>
     {% endblock %}
     </h1>
     {% if form and user.is_authenticated %}
-    {% include 'leak_form.html' %}
+    {% include 'idea_form.html' %}
     {% endif %}
-    {% include 'login.html' %}
 </header>
 
 <div id="main">
@@ -54,7 +48,7 @@
     {% block content %}
     {% autopaginate object_list 10 %}
     {% for object in object_list %}
-        {% include 'leak.html' %}
+        {% include 'idea.html' %}
         {% if forloop.counter == 5 %}{% pop_slot 'content' %}{% endif %}
     {% empty %}<h2>Nadie derramó nada aún</h2>
     {% endfor %}
@@ -64,18 +58,18 @@
      <aside>
 
         <h3>¿Qué es lo que observa?</h3>
-        <p>Esto funciona muy fácil, hacele click al + de allá arriba y pegá lo que sea. Pero ojo, nada queda almacenado en nuestros servidores, esto es solo una pasarela</p>
-        <p>Tratamos de agrandar el agujero para que más cosas caigan en él.</p>
+        <p>Desarrollamos software libre con profesionalidad y transparencia </p>
+        <p><a href="mailto:inventta@googlegroups.com">loosingtoomuchoil@gmail.com</a></p>
 
         
-        <h3>Se ha vertido en estos temas</h3>    
-        {% tag_cloud_for_model ltmo.Leak as cloud with steps=20 distribution=linear %}
+        <h3>Etiquetas</h3>    
+        {% tag_cloud_for_model invetta.idea as cloud with steps=20 distribution=linear %}
         {% for tag in cloud %}
         <a href="/l/{{tag}}" 
            style="font-size:{{tag.font_size|add:'8'}}pt"
            title="{{tag.count}} derrames">{{tag}}</a>
         {% endfor %}
-        {% tags_for_model ltmo.Leak as leak_tags with counts %}
+        {% tags_for_model invetta.idea as idea_tags with counts %}
         {% pop_slot 'aside' %}
     </aside>
     
@@ -87,7 +81,7 @@
 <footer>
 
         <p>
-        <a href="http://twitter.com/lossingoil">@lossingoil</a> - <a href="mailto:loosingtoomuchoil@gmail.com">loosingtoomuchoil@gmail.com</a> - <a href="http://github.com/tutuca/ltmo">github.com/tutuca/ltmo</a> <br />
+        <a href="http://twitter.com/somos_inventta">@somos_inventta</a> - <a href="http://github.com/invetta">github.com/invetta</a> <br />
         Las opiniones vertidas en cada artículo son responsabilidad del author
         </p>
 </footer>

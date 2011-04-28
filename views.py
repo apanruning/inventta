@@ -5,48 +5,49 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.generic import list_detail, simple
 from django.http import HttpResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 
 from tagging.models import Tag
 
-from ltmo.forms import LeakForm
-from ltmo.models import Leak
+from inventta.forms import IdeaForm
+from inventta.models import Idea
 
 
 def index(request, object_id=None):
-    queryset = Leak.objects.all().order_by('-created')
-    form = LeakForm()
+    queryset = Idea.objects.all().order_by('-created')
+    form = IdeaForm()
 
     if request.method == 'POST':
         next = request.POST['next']
-        form = LeakForm(request.POST)
+        form = IdeaForm(request.POST)
 
         if form.is_valid():
-            leak = form.save()
+            idea = form.save()
             messages.success(request, 'Ha derramado correctamente chamigo.')
             return redirect(next)
             
-    return list_detail.object_list(
+    return render(
         request,
-        queryset,
-        template_name='index.html',
+    
+        'index.html',
         extra_context={
             'form': form,
+            'object_list': queryset,
         }
     )
 
-def leak_detail(request, tag_name, object_id):
-    queryset = Leak.objects.all()
-    form = LeakForm(initial={'tags':tag_name})
-    leak = get_object_or_404(Leak, pk=object_id)
+def idea_detail(request, tag_name, object_id):
+    queryset = Idea.objects.all()
+    form = IdeaForm(initial={'tags':tag_name})
+    idea = get_object_or_404(Idea, pk=object_id)
     
     if request.is_ajax():
         return HttpResponse(
             json.dumps({
-                'title':leak.title,
-                'author':leak.author,
-                'description':leak.description,
-                'tags': leak.tags
+                'title':idea.title,
+                'author':idea.author,
+                'description':idea.description,
+                'tags': idea.tags
             }),
             
             mimetype="application/json"
@@ -54,16 +55,16 @@ def leak_detail(request, tag_name, object_id):
 
     if request.method == 'POST':
         next = request.POST['next']
-        form = LeakForm(request.POST, instance=leak)
+        form = IdeaForm(request.POST, instance=idea)
         if form.is_valid():
-            leak = form.save()
+            idea = form.save()
             messages.success(request, 'Actualizaste el #%s' %(object_id))
             return redirect(next)
             
     return list_detail.object_detail(
         request,
         queryset.filter(tags__icontains=tag_name),
-        leak.pk,
+        idea.pk,
         template_name='detail.html',
         extra_context={
             'form': form,
@@ -72,8 +73,8 @@ def leak_detail(request, tag_name, object_id):
     )
         
 def by_tag(request, tag_name=None):
-    queryset = Leak.objects.all().order_by('tags')
-    form = LeakForm()
+    queryset = Idea.objects.all().order_by('tags')
+    form = IdeaForm()
 
     if tag_name:
         queryset = queryset.filter(tags__icontains=tag_name)
@@ -99,7 +100,7 @@ def tags(request):
     )
     
 def profile_detail(request, username):
-    queryset = Leak.objects.filter(author__icontains=username).order_by('-created')
+    queryset = Idea.objects.filter(author__icontains=username).order_by('-created')
 
     try:
         author = User.objects.get(username__icontains=username)

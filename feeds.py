@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.contrib.syndication.views import Feed
-from ltmo.models import Leak
+from invetta.models import Idea
 
-class LeakFeed(Feed):
+class IdeaFeed(Feed):
     title = "Recientemente derramado"
     link = "/"
-    description = "Cosas publicadas recientemente en el fantastico ltmo"
+    description = "Cosas publicadas recientemente en el fantastico invetta"
     description_template = 'feeds/description.html'
 
     def items(self):
-        return Leak.objects.order_by("-created")[:15]
+        return Idea.objects.order_by("-created")[:15]
 
     def item_title(self, item):
         return item.title or ' '
