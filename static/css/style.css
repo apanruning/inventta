@@ -253,6 +253,7 @@ form {
 #idea-form {
     position:absolute;
     top:4em;
+    z-index: 9999;
 }
 #idea-form section{
     margin-bottom:1em;
