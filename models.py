@@ -37,7 +37,7 @@ class Idea(models.Model):
         super(Idea, self).save()
         
 class IdeaAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'tags','author', 'created')
-    list_filter = ('author', 'created')
+    list_display = ('__unicode__', 'tags','author', 'is_draft', 'created', 'changed')
+    list_filter = ('author', 'created', 'is_draft')
 
 admin.site.register(Idea, IdeaAdmin)

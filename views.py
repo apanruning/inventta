@@ -49,6 +49,7 @@ def idea_detail(request, tag_name, object_id):
                 'title':idea.title,
                 'author':idea.author,
                 'description':idea.description,
+                'is_draft':idea.is_draft,
                 'tags': idea.tags
             }),
             
