@@ -28,7 +28,7 @@ footer {
     clear: both;
 }
 #main h2 a, #main h3 a, #main h1 a {
-    color: #09929E;
+    color: #930;
 }
 section {
     display:block;
@@ -59,7 +59,7 @@ blockquote{
 }
 
 a {
-   color:#056324;
+   color:#C60;
    text-decoration:none;
 }
 a:hover {
