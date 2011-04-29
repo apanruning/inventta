@@ -18,6 +18,23 @@ from fabric.api import env, run, local, require, put, sudo, prompt, cd
 
 BASE_DIR = os.path.dirname(__file__)
 
+WSGI_TEMPLATE = Template('''
+# -*- coding: utf-8 -*-
+import sys, os, site
+
+site.addsitedir('$virtual_env/lib/python2.6/site-packages/')
+
+# Add a custom Python path.
+sys.path.append('$deploy_dir')
+sys.path.insert(0,'$deploy_dir/apps')
+
+# Set the DJANGO_SETTINGS_MODULE environment variable.
+os.environ['DJANGO_SETTINGS_MODULE'] = "production"
+
+import django.core.handlers.wsgi
+application = django.core.handlers.wsgi.WSGIHandler()
+    ''')
+
 def development():
     env.hosts = ["localhost"]
     env.project_name = BASE_DIR.split('/')[-1:].pop()
@@ -32,9 +49,9 @@ def production(username="cmonetti", hosts=["inventta.com.ar"]):
     env.user = username
     env.hosts = hosts
     env.project_name = BASE_DIR.split('/')[-1:].pop()
-    env.deploy_dir = '/home/cmonetti/webapps/invetta/src/invetta'
-    env.virtual_env = '/home/cmonetti/webapps/invetta/venv'
-    env.apache_command = '/home/cmonetti/webapps/invetta/apache2/bin/restart'
+    env.deploy_dir = '/home/cmonetti/webapps/inventta/src/inventta'
+    env.virtual_env = '/home/cmonetti/webapps/inventta/venv'
+    env.apache_command = '/home/cmonetti/webapps/inventta/apache2/bin/restart'
     
 def write_template(file_name, template_name):
     '''

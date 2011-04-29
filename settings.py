@@ -17,7 +17,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'invetta.db'),
+        'NAME': os.path.join(BASE_DIR, 'inventta.db'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -35,13 +35,13 @@ USE_I18N = True
 
 USE_L10N = True
 
-ROOT_URLCONF = 'invetta.urls'
+ROOT_URLCONF = 'inventta.urls'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -104,7 +104,7 @@ INSTALLED_APPS = (
     'pagination',
     'tagging',
     'banners',
-    'invetta',
+    'inventta',
 )
 
 try:

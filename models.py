@@ -18,6 +18,7 @@ class Idea(models.Model):
     changed = models.DateTimeField(auto_now=True, editable = False)
     tags = TagField()
     metadata = models.TextField(default='', null=True, blank=True)
+    is_draft = models.BooleanField(default=True)
     
     def __unicode__(self):
         return self.title or u'sin título'

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.contrib.syndication.views import Feed
-from invetta.models import Idea
+from inventta.models import Idea
 
 class IdeaFeed(Feed):
     title = "Recientemente derramado"
     link = "/"
-    description = "Cosas publicadas recientemente en el fantastico invetta"
+    description = "Cosas publicadas recientemente en el fantastico inventta"
     description_template = 'feeds/description.html'
 
     def items(self):

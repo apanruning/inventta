@@ -2,11 +2,11 @@
 from django.conf import settings
 from django.utils import simplejson as json
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 from django.contrib import messages
-from django.views.generic import list_detail, simple
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404, render
-
 from tagging.models import Tag
 
 from inventta.forms import IdeaForm
@@ -14,7 +14,9 @@ from inventta.models import Idea
 
 
 def index(request, object_id=None):
-    queryset = Idea.objects.all().order_by('-created')
+    queryset = Idea.objects.all().order_by('-changed')
+    if not request.user.is_staff:
+        queryset = queryset.exclude(is_draft=True)
     form = IdeaForm()
 
     if request.method == 'POST':
@@ -30,7 +32,7 @@ def index(request, object_id=None):
         request,
     
         'index.html',
-        extra_context={
+        {
             'form': form,
             'object_list': queryset,
         }
@@ -61,14 +63,14 @@ def idea_detail(request, tag_name, object_id):
             messages.success(request, 'Actualizaste el #%s' %(object_id))
             return redirect(next)
             
-    return list_detail.object_detail(
+    return render(
         request,
-        queryset.filter(tags__icontains=tag_name),
-        idea.pk,
-        template_name='detail.html',
-        extra_context={
+        'detail.html',
+        {
             'form': form,
-            'tag': tag_name
+            'tag': tag_name,
+            'object_id': idea.pk,
+            'object_list': queryset.filter(tags__icontains=tag_name),
         }
     )
         
@@ -79,13 +81,13 @@ def by_tag(request, tag_name=None):
     if tag_name:
         queryset = queryset.filter(tags__icontains=tag_name)
 
-    return list_detail.object_list(
+    return render(
         request,
-        queryset,
-        template_name='tags.html',
-        extra_context={
+        'tags.html',
+        {
             'form': form,
             'tag_name': tag_name,
+            'object_list': queryset.filter(tags__icontains=tag_name),
         }
     )
 
@@ -107,13 +109,13 @@ def profile_detail(request, username):
     except :
         author = None
 
-    return list_detail.object_list(
+    return render(
         request,
-        queryset,
-        template_name='profile.html',
-        extra_context={
+        'profile.html',
+        {
             'author':author,
             'is_me':request.user.username == 'username',
+            'object_list': queryset,
         }
     )
 

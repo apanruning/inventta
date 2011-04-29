@@ -3,12 +3,12 @@
 <html lang='es'>
 <head>
     <meta charset="utf-8" />
-    <title>invetta . {% block title %}Igual que a Scioli, a veces se nos va la mano{% endblock %}</title>
+    <title>inventta . {% block title %}{% endblock %}</title>
     <link rel="icon" type="image/png" href="/static/favicon.ico" />
 
-    <meta name="description" content="invetta, un sitio para procastinar en todos los niveles que sea imaginable." />
+    <meta name="description" content="inventta, un sitio para procastinar en todos los niveles que sea imaginable." />
     <meta name="google-site-verification" content="GzD0PcJhPHGZ1BcTySo8BLEqEQNObvIqqMXSjqVeh4w" />
-    <link title="invetta" href="/feed/" type="application/rss+xml" rel="alternate">
+    <link title="inventta" href="/feed/" type="application/rss+xml" rel="alternate">
     <link rel="stylesheet" href="/static/css/style.css" type="text/css" static="screen" />    
     <link rel="stylesheet" href="/static/css/code.css" type="text/css" static="screen" />    
     <script src="/static/js/jquery.js"></script>
@@ -34,7 +34,7 @@
     </nav>
     <h1 id="logo">
     {% block logo %}
-    <a href="http://{{request.get_host}}" title="Bienvenido">invetta</a>
+    <a href="http://{{request.get_host}}" title="Bienvenido">inventta</a>
     {% endblock %}
     </h1>
     {% if form and user.is_authenticated %}
@@ -46,31 +46,41 @@
 {% block main %}
     <section>
     {% block content %}
+    {% regroup object_list by tags as object_list %}
     {% autopaginate object_list 10 %}
-    {% for object in object_list %}
-        {% include 'idea.html' %}
+    {% for tag in object_list %}
+        {%if not tag_name%}
+        <h2><a href="/tag/{{tag.grouper}}">{{tag.grouper}}/</h2>
+        {%endif%}
+        {% for object in tag.list|slice:':5' %}
+            {% include 'idea.html' %}
+            {% if forloop.counter == 4 %}{% pop_slot 'content' %}{% endif %}
+        {% endfor %}
         {% if forloop.counter == 5 %}{% pop_slot 'content' %}{% endif %}
-    {% empty %}<h2>Nadie derramó nada aún</h2>
     {% endfor %}
     {% paginate %}
+
     {% endblock %}
     </section>
      <aside>
 
-        <h3>¿Qué es lo que observa?</h3>
-        <p>Desarrollamos software libre con profesionalidad y transparencia </p>
-        <p><a href="mailto:inventta@googlegroups.com">loosingtoomuchoil@gmail.com</a></p>
+        <p>Resolvemos problemas informáticos desarrollando software libre con una variedad de técnicas y herramientas.</p>
+        {% tag_cloud_for_model inventta.idea as cloud with steps=20 distribution=linear %}
+        {% if cloud %}
 
-        
-        <h3>Etiquetas</h3>    
-        {% tag_cloud_for_model invetta.idea as cloud with steps=20 distribution=linear %}
+        <ul>
         {% for tag in cloud %}
+        <li>
         <a href="/l/{{tag}}" 
-           style="font-size:{{tag.font_size|add:'8'}}pt"
            title="{{tag.count}} derrames">{{tag}}</a>
+       </li>
         {% endfor %}
-        {% tags_for_model invetta.idea as idea_tags with counts %}
+        </ul>
+        {% tags_for_model inventta.idea as idea_tags with counts %}
+        {% endif %}
+
         {% pop_slot 'aside' %}
+        
     </aside>
     
 
@@ -79,11 +89,7 @@
 </div>
 
 <footer>
-
-        <p>
-        <a href="http://twitter.com/somos_inventta">@somos_inventta</a> - <a href="http://github.com/invetta">github.com/invetta</a> <br />
-        Las opiniones vertidas en cada artículo son responsabilidad del author
-        </p>
+        <p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/" title="some rights reserved">CC</a> 2011 inventta - Córdoba -  Argentina</p>
 </footer>
 </div>
 

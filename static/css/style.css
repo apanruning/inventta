@@ -1,5 +1,6 @@
 body {
-    font: 100% sans-serif;
+    font: 100% "Lucida Grande", serif;
+    color: #333;
 }
 header, section, footer, article, aside {
     display: block;
@@ -11,29 +12,28 @@ header {
     width: 97%;
     padding:0 1.5%;
     margin: 0;
-    position: fixed;
-    top:0;
     background:#FFF;
+    font-family: sans-serif;
+    position: relative;
 }
 
 footer {
     clear: both;
-    padding: 5em 1em 1em;
-    font-size: 80%;
-}
-footer p{ 
+    padding: 2em 1em 1em;
 }
 
 #main{
-    margin:4em auto;
+    margin:0 auto;
     max-width: 70em;
     clear: both;
 }
-
+#main h2 a, #main h3 a, #main h1 a {
+    color: #09929E;
+}
 section {
     display:block;
-    float: left;
-    width: 63%
+    float: right;
+    width: 64%
 } 
 
 details {
@@ -45,8 +45,8 @@ details {
 aside {
     text-align: left;
     width: 29%;
-    float: right;
-    font-size: 80%;
+    float: left;
+    margin: 4em 0;
 }
 pre, code {
     font: 110% monospace;
@@ -54,23 +54,43 @@ pre, code {
 }
 
 blockquote{
-    font: italic 150% "Georgia-MS", Georgia, serif;
+    font: italic 100% "Georgia-MS", Georgia, serif;
     
 }
 
 a {
-   color:#06C;
+   color:#056324;
    text-decoration:none;
 }
 a:hover {
-    text-shadow: 1px 1px 1px #CCC, 0 -1px 1px #EBEBEB;
+    text-shadow: 1px 1px 1px #CCC, 1px 1px 1px #EBEBEB;
 }
 
 a img{
     border: 0;
+    vertical-align: middle;
 }
 em {
     font: italic 100% "Georgia-MS", Georgia, serif;
+}
+
+ul {
+    list-style: square;
+}
+dl {
+
+}
+dt {
+    font-size: 90%;
+}
+dd {
+    margin: 0.5em 1em;
+}
+section img {
+    display:block;
+    margin: 1em auto;
+    max-width: 45em;
+
 }
 article img, article object {
     display:block;
@@ -78,6 +98,7 @@ article img, article object {
     max-width: 35em;
 
 }
+
 h1, h2, h3, h1 a, h2 a, h3 a {
     font-weight: normal;
 }
@@ -103,7 +124,8 @@ h2 {
 }
 #logo {
     margin:0;
-    border-bottom: 1px solid #EEE;
+    line-height: 1.5em;
+    font-size: 3em;
 }
 #banner-header {
     float:right;
@@ -225,8 +247,14 @@ form {
     border-radius: 0 0 5px 5px;
     box-shadow: 2px 2px 3px #999;
 }
+#idea-form {
+    position:absolute;
+    top:4em;
+}
 #idea-form section{
     margin-bottom:1em;
+    float:left;
+
 }
 .submit {
     text-align: right;

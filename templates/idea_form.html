@@ -16,7 +16,7 @@
     <section>
     <div class="field {% if form.title.errors %}error{% endif %}" id="field_{{form.title.name}}" >
         <label for="id_{{form.title.name}}">Título</label> 
-        {{form.title}}{% if user.is_anonymous %} por {{form.author}}{% endif %}
+        {{form.title}} borrador? {{form.is_draft}}
     </div>
     <div class="field required {% if form.description.errors %}error{% endif %}" id="field_{{form.description.name}}"> 
         {{form.description.errors}}
