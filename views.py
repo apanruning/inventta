@@ -14,7 +14,7 @@ from inventta.models import Idea
 
 
 def index(request, object_id=None):
-    queryset = Idea.objects.all().order_by('-changed')
+    queryset = Idea.objects.all().order_by('pk')
     if not request.user.is_staff:
         queryset = queryset.exclude(is_draft=True)
     form = IdeaForm()
