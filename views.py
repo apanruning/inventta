@@ -70,7 +70,7 @@ def idea_detail(request, tag_name, object_id):
         {
             'form': form,
             'tag': tag_name,
-            'object_id': idea.pk,
+            'object': idea,
             'object_list': queryset.filter(tags__icontains=tag_name),
         }
     )
