@@ -220,7 +220,10 @@ h2 {
     min-width:30px;
     white-space: nowrap;
 }
+.draft {
+    opacity: 0.8 !important;
 
+}
 /* forms */
 .hide {
     display:none;
