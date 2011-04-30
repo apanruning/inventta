@@ -1,14 +1,12 @@
 {% extends 'index.html' %}
 {% load pagination_tags banner_tags tagging_tags %}
 {% block content %}
-<h1>
-    <a href="/l/{{tag_name|slugify}}" title="Hay {{object_list.count}} ideas con esta etiqueta">{{tag_name|default:'ideas'}}</a> ({{object_list.count}})
-</h1>
+<h2><a href="/l/{{tag_name|slugify}}" title="Hay {{object_list.count}} ideas con esta etiqueta">{{tag_name}}</a></h2>
 {% regroup object_list by tags as object_list %}
 {% autopaginate object_list 10 %}
 {% for tag in object_list %}
     {%if not tag_name%}
-    <h2><a href="/tag/{{tag.grouper}}">{{tag.grouper}}/</h2>
+    <h2><a href="/l/{{tag.grouper}}">{{tag.grouper}}/</h2>
     {%endif%}
     {% for object in tag.list|slice:':5' %}
         {% include 'idea.html' %}

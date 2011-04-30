@@ -84,7 +84,7 @@ def by_tag(request, tag_name=None):
 
     return render(
         request,
-        'tags.html',
+        'index.html',
         {
             'form': form,
             'tag_name': tag_name,
