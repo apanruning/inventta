@@ -25,7 +25,7 @@ DATABASES = {
     }
 }
 
-TIME_ZONE = 'America/Argentina/Córdoba'
+TIME_ZONE = 'America/Argentina/Cordoba'
 
 LANGUAGE_CODE = 'es-ar' # Using Guarani, Of Course
 
