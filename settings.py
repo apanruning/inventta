@@ -25,9 +25,9 @@ DATABASES = {
     }
 }
 
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Argentina/Córdoba'
 
-LANGUAGE_CODE = 'gn' # Using Guarani, Of Course
+LANGUAGE_CODE = 'es-ar' # Using Guarani, Of Course
 
 SITE_ID = 1
 
