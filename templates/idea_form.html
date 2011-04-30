@@ -4,15 +4,9 @@
     {% endif %}
     <input type="hidden" name="next" value="{{request.path}}" />
     {% csrf_token %}
-    <table id="formating-help">
-    <caption>Podés usar <a href="/help#syntax">markdown</a> y pegar vinculos a imágenes directamente</caption>
-        <tbody>
-            <tr><td>*itálicas*</td><td><em>itálicas</em></td></tr>
-            <tr><td>**negritas**</td><td><b>negritas</b></td></tr>
-            <tr><td>[link](http://inventta.com.ar)</td><td><a href="http://inventta.com.ar">link</a></td></tr>
-            <tr><td>* item 1<br>* item 2<br></td><td><ul><li>item 1</li><li>item 2</li></ul></td></tr>
-            <tr><td>&gt; texto citado</td><td><blockquote>texto citado</blockquote></td></tr>
-    </table>
+    <pre id="formating-help">
+    {{form.description.help_text|safe}}
+    </pre>
     <section>
     <div class="field {% if form.title.errors %}error{% endif %}" id="field_{{form.title.name}}" >
         <label for="id_{{form.title.name}}">Título</label> 

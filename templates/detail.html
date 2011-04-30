@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'master.html' %}
 {%  load banner_tags tagging_tags %}
 {% block title %}
 {{object.title}}
@@ -6,8 +6,7 @@
 
 {% block content %}
         <h1>
-             <a href="/l/{{tag|slugify}}" title="Hay {{object_list.count}} derrames con esta etiqueta">{{tag}}/</a>
-             <a href="{{object.get_absolute_url}}">{{object.title|default:'sin-titulo'}}</a>
+             <a href="/">../</a><a href="/l/{{tag|slugify}}">{{tag}}/</a><a href="{{object.get_absolute_url}}">{{object.title|default:'sin-titulo'}}</a>
         </h1>
             {{object.rendered|safe}}
             {% tags_for_object object as tag_list %}

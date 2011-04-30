@@ -10,16 +10,19 @@ class IdeaForm(forms.ModelForm):
     description = forms.CharField(
             widget=forms.Textarea,
             help_text='''
-            *itálicas*`*itálicas*
+*itálicas*
 
-            **negritas**` **negritas**
+**negritas**
 
-            [link](http://inventta.com.ar)
+[link](http://inventta.com.ar)
 
-            * item 1
-            * item 2
+    def code_block(code, indent=4):
+        returns hilite(code)
 
-            `> texto citado`
+* item 1
+* item 2
+
+> texto citado
             '''
         )
     tags = TagField(required=True)    
