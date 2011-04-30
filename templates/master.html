@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{%  load tagging_tags banner_tags %}
+<html lang='es'>
+<head>
+    <meta charset="utf-8" />
+    <title>inventta . {% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="/static/favicon.ico" />
+
+    <meta name="description" content="inventta, un sitio para procastinar en todos los niveles que sea imaginable." />
+    <meta name="google-site-verification" content="GzD0PcJhPHGZ1BcTySo8BLEqEQNObvIqqMXSjqVeh4w" />
+    <link title="inventta" href="/feed/" type="application/rss+xml" rel="alternate">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" static="screen" />    
+    <link rel="stylesheet" href="/static/css/code.css" type="text/css" static="screen" />    
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/ui.js"></script>
+    <script src="/static/js/ltmo.js"></script>
+    {% pop_slot 'analytics' %}
+</head>
+<body>
+<div id="wrapper">
+{% if messages %}
+<ul id="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}<a class="control" href="#messages">X</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+<header>
+    <nav>
+    {% if form and user.is_authenticated %}
+    <a href="#idea-form" id="new-idea" class="control" title="Nunca sobra un poco de aceite">+</a>      
+    <a href="/out" title="Salir">..</a>
+    {% endif %}  
+    </nav>
+    <h1 id="logo">
+    {% block logo %}
+    <a href="http://{{request.get_host}}" title="Bienvenido">inventta</a>
+    {% endblock %}
+    </h1>
+    {% if form and user.is_authenticated %}
+    {% include 'idea_form.html' %}
+    {% endif %}
+</header>
+
+<div id="main">
+{% block main %}
+    <section>
+    {% block content %}
+
+    {% endblock %}
+    </section>
+     <aside>
+
+        <p>Resolvemos problemas informáticos desarrollando software libre con una variedad de técnicas y herramientas.</p>
+        {% tag_cloud_for_model inventta.idea as cloud with steps=20 distribution=linear %}
+        {% if cloud %}
+
+        <ul>
+        {% for tag in cloud %}
+        <li>
+        <a href="/l/{{tag}}" 
+           title="{{tag.count}} derrames">{{tag}}</a>
+       </li>
+        {% endfor %}
+        </ul>
+        {% tags_for_model inventta.idea as idea_tags with counts %}
+        {% endif %}
+
+        {% pop_slot 'aside' %}
+        
+    </aside>
+
+    <br class="clear"/>
+{% endblock %}
+</div>
+
+<footer>
+        <p><a rel="license" href="http://creativecommons.org/licenses/by/3.0/" title="some rights reserved">CC</a> 2011 inventta - Córdoba -  Argentina</p>
+</footer>
+</div>
+
+</body>
+
+    
+<!-- 
+      _______    
+     |   __  \
+     |  |  |  |
+     |   ··   |
+     |   __  /
+     |  |
+ __  |__| __
+ \  \    /  /
+  \  \  /  /
+   \  \/  /
+    \    /
+     \__/
+ -->
+</html>
