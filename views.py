@@ -42,19 +42,6 @@ def idea_detail(request, tag_name, object_id):
     queryset = Idea.objects.all()
     form = IdeaForm(initial={'tags':tag_name})
     idea = get_object_or_404(Idea, pk=object_id)
-    
-    if request.is_ajax():
-        return HttpResponse(
-            json.dumps({
-                'title':idea.title,
-                'author':idea.author,
-                'description':idea.description,
-                'is_draft':idea.is_draft,
-                'tags': idea.tags
-            }),
-            
-            mimetype="application/json"
-        )
 
     if request.method == 'POST':
         next = request.POST['next']
@@ -74,6 +61,22 @@ def idea_detail(request, tag_name, object_id):
             'object_list': queryset.filter(tags__icontains=tag_name),
         }
     )
+
+def idea_json(request, tag_name, object_id):
+    queryset = Idea.objects.all()
+    form = IdeaForm(initial={'tags':tag_name})
+    idea = get_object_or_404(Idea, pk=object_id)
+    return HttpResponse(
+        json.dumps({
+            'title':idea.title,
+            'author':idea.author,
+            'description':idea.description,
+            'is_draft':idea.is_draft,
+            'tags': idea.tags
+        }),
+        
+        mimetype="application/json"
+    )
         
 def by_tag(request, tag_name=None):
     queryset = Idea.objects.all().order_by('tags')
@@ -84,7 +87,7 @@ def by_tag(request, tag_name=None):
 
     return render(
         request,
-        'index.html',
+        'list.html',
         {
             'form': form,
             'tag_name': tag_name,

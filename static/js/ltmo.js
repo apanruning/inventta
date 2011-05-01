@@ -19,6 +19,9 @@
 		function extractLast( term ) {
 			return split( term ).pop();
 		}
+        $("#browse a").pjax("#main section");
+        $("#main h1 a").pjax("#main section");
+        $("#main h2 a").pjax("#main section");
 
         $('.control').click(function(){
             target = $(this).attr('href');
@@ -40,7 +43,7 @@
             
         });
         $('.edit').click(function(){
-            url = $(this).attr('href');
+            url = $(this).attr('href')+'.json';
             $.getJSON(url, function(data){
                 $('#idea-form').attr('action', url);
                 form_fields = $('#idea-form :input');
@@ -98,5 +101,6 @@
             window.setTimeout(function(){
                 $('#messages .control').click()
                 }, 1000);
+
     })
 

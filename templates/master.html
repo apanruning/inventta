@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/static/css/code.css" type="text/css" static="screen" />    
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/ui.js"></script>
+    <script src="/static/js/jquery.pjax.js"></script>
     <script src="/static/js/ltmo.js"></script>
     {% pop_slot 'analytics' %}
 </head>
@@ -55,12 +56,9 @@
         {% tag_cloud_for_model inventta.idea as cloud with steps=20 distribution=linear %}
         {% if cloud %}
 
-        <ul>
+        <ul id="browse">
         {% for tag in cloud %}
-        <li>
-        <a href="/l/{{tag}}" 
-           title="{{tag.count}} derrames">{{tag}}</a>
-       </li>
+        <li><a href="/l/{{tag}}" title="{{tag.count}}">{{tag}}</a></li>
         {% endfor %}
         </ul>
         {% tags_for_model inventta.idea as idea_tags with counts %}
