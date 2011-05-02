@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 
 from inventta.feeds import IdeaFeed
 from inventta.models import Idea
+from inventta.forms import CommentForm, IdeaForm
 
 admin.autodiscover()
 
@@ -21,11 +22,17 @@ sitemaps = {
 
 urlpatterns = patterns('inventta.views',
     (r'^$','index',{},'index'),
-    (r'^idea/$','index',{},'idea_new'),
-    (r'^l/$','by_tag',{}),
-    (r'^l/(?P<tag_name>[\w-]+)$','by_tag',{},'tag'),
-    (r'^l/(?P<tag_name>[\w-]+)/(?P<object_id>\d+)$','idea_detail',{},'idea_detail'),
-    (r'^l/(?P<tag_name>[\w-]+)/(?P<object_id>\d+).json$','idea_json',{},'idea_json'),
+    (r'^idea/$','index',{},'index'),
+    (r'^idea/new$','idea_new',{},'idea_new'),
+    (r'^idea/(?P<tag_name>[\w-]+)$','by_tag',{},'tag'),
+    (r'^idea/(?P<tag_name>[\w-]+)/(?P<object_id>\d+)$','idea_detail',{},'idea_detail'),
+    (r'^idea/(?P<tag_name>[\w-]+)/(?P<object_id>\d+)/edit$','idea_new'),
+    (r'^idea/(?P<tag_name>[\w-]+)/(?P<object_id>\d+).json$','idea_json',{},'idea_json'),
+    (r'^comentarios/$','comment_list',{},'comment_list'),
+    (r'^comentarios/new$','comment_new',{},'comment_new'),
+    (r'^comentarios/(?P<object_id>\d+)$','comment_detail',{},'comment_detail'),
+    (r'^comentarios/(?P<object_id>\d+)/edit$','comment_new'),
+
     (r'^tags/','tags',{},'tags'),
     (r'^~(?P<username>\w+)/$','profile_detail', {}, 'author_detail'),
     (r'^in/$', 'login', {}, 'login'),

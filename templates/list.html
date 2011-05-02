@@ -4,9 +4,9 @@
 {% autopaginate object_list 10 %}
 {% for tag in object_list %}
     {%if tag_name%}
-    <h1><a href="/">../</a><a href="/l/{{tag_name|slugify}}" title="Hay {{object_list.count}} ideas con esta etiqueta">{{tag_name}}/</a></h1>
+    <h1><a href="/">../</a><a href="/idea/{{tag_name|slugify}}" title="Hay {{object_list.count}} ideas con esta etiqueta">{{tag_name}}/</a></h1>
     {% else %}
-    <h1><a href="/l/{{tag.grouper}}">{{tag.grouper}}/</h1>
+    <h1><a href="/idea/{{tag.grouper}}">{{tag.grouper}}/</h1>
     {%endif%}
     {% for object in tag.list|slice:':5' %}
         {% include 'idea.html' %}

@@ -3,7 +3,7 @@
 from django import forms
 from tagging.forms import TagField
 
-from inventta.models import Idea
+from inventta.models import Idea, Comment
 
 
 class IdeaForm(forms.ModelForm):
@@ -25,7 +25,29 @@ class IdeaForm(forms.ModelForm):
 > texto citado
             '''
         )
-    tags = TagField(required=True)    
+    tags = TagField(required=True)
     class Meta:
         model = Idea
         exclude = ['rendered',]
+        
+class CommentForm(forms.ModelForm):
+    description = forms.CharField(
+            widget=forms.Textarea,
+            help_text='''
+Puede usar un poco de markdown
+
+*itálicas*
+**negritas**
+[link](http://inventta.com.ar)
+
+* item 1
+* item 2
+
+> texto citado
+            '''
+        )
+    honeypot = forms.CharField(required=False)
+    class Meta:
+        model = Comment
+        exclude = ['rendered', 'tags', 'parent']
+

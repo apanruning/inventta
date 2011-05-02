@@ -41,3 +41,17 @@ class IdeaAdmin(admin.ModelAdmin):
     list_filter = ('author', 'created', 'is_draft')
 
 admin.site.register(Idea, IdeaAdmin)
+
+
+class Comment(Idea):
+    parent = models.ForeignKey('Idea', null=True)
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('comment_detail', [self.id])
+    
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'parent','author', 'is_draft', 'created', 'changed')
+    list_filter = ('author', 'created', 'is_draft')
+
+admin.site.register(Comment, CommentAdmin)

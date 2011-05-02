@@ -1,13 +1,21 @@
-<form id="idea-form" action="{% url idea_new %}" method="post" {% if not form.errors %}class="hide"{% endif %}>
+<title>inventta . {{object.title}}</title>
+{% if instance %}
+<h1><a href="/">../</a><a href="/idea/{{instance.tags}}">{{instance.tags}}/</a><a href="{{instance.get_absolute_url}}">{{instance.title|default:"sin-titulo"}}</a></h1>
+{% else %}
+<h1><a href="/">../</a>nueva entrada</h1>
+{% endif %}
+
+<form id="idea-form" 
+      method="post"
+      action="{% if instance %}{{instance.get_absolute_url}}{%else%}{% url index %}{% endif %}">
     {% if not user.is_anonymous %}
     <input type="hidden" id="id_{{form.author.name}}" name="{{form.author.name}}" value="{{user}}" />
     {% endif %}
-    <input type="hidden" name="next" value="{{request.path}}" />
+    <input type="hidden" name="next" value="{% url index %}" />
     {% csrf_token %}
     <pre id="formating-help">
     {{form.description.help_text|safe}}
     </pre>
-    <section>
     <div class="field {% if form.title.errors %}error{% endif %}" id="field_{{form.title.name}}" >
         <label for="id_{{form.title.name}}">Título</label> 
         {{form.title}} borrador? {{form.is_draft}}
@@ -22,11 +30,8 @@
         <label for="id_{{form.tags.name}}">Tags</label> 
         {{form.tags}}
     </div>
-    </section>
     <div class="clear submit">
         <input name="save" type="submit" value="listo" /> 
-        <a href="#idea-form" class="control">Cerrar</a> 
-
+        <a href="/">cancelar</a> 
     </div>
-
 </form>

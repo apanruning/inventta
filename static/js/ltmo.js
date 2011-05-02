@@ -22,23 +22,10 @@
         $("#browse a").pjax("#main section");
         $("#main h1 a").pjax("#main section");
         $("#main h2 a").pjax("#main section");
-
+        $("a.pjax").pjax("#main section");
         $('.control').click(function(){
             target = $(this).attr('href');
             $(target).toggle('blind', 300);
-            if (target === '#idea-form'){
-                window.setTimeout(function(){
-                    $('#id_description').focus();
-                    $('#idea-form').bind( "keydown", function(event) {
-			                if ( event.keyCode === $.ui.keyCode.ESCAPE) {
-				                $('#idea-form').hide('blind', 300)
-				                               .unbind('keydown');
-			                }
-		                });
-
-                },400)
-
-            }
             return false;
             
         });

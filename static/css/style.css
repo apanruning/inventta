@@ -1,5 +1,5 @@
 body {
-    font: 100% "Lucida Grande", sans-serif;
+    font: 100% "Droid Sans", "Lucida Grande", sans-serif;
     color: #333;
     margin:0;
     padding: 0;
@@ -33,7 +33,7 @@ footer {
 
 #main{
     margin:0 auto;
-    max-width: 70em;
+    max-width: 90%;
     clear: both;
 }
 #main h2 a, #main h3 a, #main h1 a {
@@ -42,7 +42,7 @@ footer {
 section {
     display:block;
     float: right;
-    width: 64%
+    width: 70%
 } 
 
 details {
@@ -53,7 +53,7 @@ details {
 }
 aside {
     text-align: left;
-    width: 29%;
+    width: 24%;
     float: left;
     margin: 4em 0;
 }
@@ -253,21 +253,6 @@ nav a:hover {
     width: 32em;
 }
 form {
-    padding: 1em 1em 0.5em;
-    background:#EEE;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 2px 2px 3px #999;
-}
-#idea-form {
-    position:absolute;
-    top:4.7em;
-    z-index: 9999;
-    width:90%
-}
-#idea-form section{
-    margin-bottom:1em;
-    float:left;
-
 }
 .submit {
     text-align: right;
@@ -278,10 +263,7 @@ form {
 }
 #formating-help {
     float:right;
-    width: 30%;
-    border: 1px solid #FFF;
-    border-width:1px 0;
-    border-color: #CCC transparent #FFF;
+    width: 36%;
 
 }
 #formating-help caption {
@@ -333,10 +315,8 @@ textarea:focus{
     font-size:80%;
 }
 .field label {
-    float:left;
-    width: 6em;
-    margin: 0.5em 1em;
-    text-align:right;
+    display:block;
+    text-align:left;
 }
 .field span {
     font-size:80%;
@@ -363,8 +343,11 @@ input[type='submit']:active {
     margin:4px -2px 0 0;
     
 }
-
-
+#field_honeypot {
+    position: absolute;
+    left: -99999px;
+    height:0;
+}
 .ui-autocomplete {
     list-style: none;
     position:fixed !important;

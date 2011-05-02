@@ -1,9 +1,8 @@
 {%  load banner_tags tagging_tags %}
 <title>inventta . {{object.title}}</title>
-
 {% block content %}
         <h1>
-             <a href="/">../</a><a href="/l/{{tag|slugify}}">{{tag}}/</a><a href="{{object.get_absolute_url}}">{{object.title|default:'sin-titulo'}}</a>
+             <a href="/">../</a><a href="/idea/{{tag|slugify}}">{{tag}}/</a><a href="{{object.get_absolute_url}}">{{object.title|default:'sin-titulo'}}</a>
         </h1>
             {{object.rendered|safe}}
             {% tags_for_object object as tag_list %}

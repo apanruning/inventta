@@ -9,11 +9,11 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404, render
 from tagging.models import Tag
 
-from inventta.forms import IdeaForm
-from inventta.models import Idea
+from inventta.forms import IdeaForm, CommentForm
+from inventta.models import Idea, Comment
 
 
-def index(request, object_id=None):
+def index(request):
     queryset = Idea.objects.all().order_by('pk')
     if not request.user.is_staff:
         queryset = queryset.exclude(is_draft=True)
@@ -25,15 +25,18 @@ def index(request, object_id=None):
 
         if form.is_valid():
             idea = form.save()
-            messages.success(request, 'Ha derramado correctamente chamigo.')
+            messages.success(
+                request, 
+                u'Mensaje publicado con exito.'
+            )
             return redirect(next)
-            
+        else :
+            return idea_new(request, form_instance=form)            
     return render(
         request,
-    
-        'index.html',
+        'master.html',
         {
-            'form': form,
+            'idea_form': form,
             'object_list': queryset,
         }
     )
@@ -50,18 +53,114 @@ def idea_detail(request, tag_name, object_id):
             idea = form.save()
             messages.success(request, 'Actualizaste el #%s' %(object_id))
             return redirect(next)
-            
+        else :
+            return idea_new(
+                request,
+                tag_name=tag_name,
+                object_id=object_id,
+                form_instance=form
+            )
     return render(
         request,
         'detail.html',
         {
-            'form': form,
+            'idea_form': form,
             'tag': tag_name,
             'object': idea,
             'object_list': queryset.filter(tags__icontains=tag_name),
         }
     )
 
+@login_required
+def idea_new(request, tag_name=None, object_id=None, form_instance=None):
+    form = IdeaForm()
+    
+    if object_id:
+        idea = get_object_or_404(Idea, pk=object_id)
+        form = IdeaForm(instance=idea)
+    else :
+        idea = None
+
+    if form_instance:
+        form = form_instance
+                
+    return render(
+        request, 
+        'idea_form.html',
+        {
+            'form': form,
+            'instance': idea,
+            'tag_name': tag_name,
+        }
+    )
+
+def comment_list(request):
+    queryset = Comment.objects.all().order_by('pk')
+    if not request.user.is_staff:
+        queryset = queryset.exclude(is_draft=True)
+    form = CommentForm()
+
+    if request.method == 'POST' and request.POST['honeypot'] == '':
+        next = request.POST['next']
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save()
+            messages.success(
+                request, 
+                u'Mensaje publicado con exito.'
+            )
+            return redirect(next)
+        else :
+            return comment_new(request, form_instance=form)
+    return render(
+        request,
+        'master.html',
+        {
+            'comment_form': form,
+            'object_list': queryset,
+        }
+    )
+
+def comment_detail(request, object_id):
+    queryset = Comment.objects.all()
+    form = CommentForm()
+    comment = get_object_or_404(Comment, pk=object_id)
+
+    if request.method == 'POST':
+        next = request.POST['next']
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save()
+            messages.success(request, 'Actualizaste el #%s' %(object_id))
+            return redirect(next)
+        else :
+            return comment_new(
+                request, 
+                object_id=object_id,
+                form_instance=form
+            )
+    return render(
+        request,
+        'detail.html',
+        {
+            'comment_form': form,
+            'object': comment,
+            'object_list': queryset,
+        }
+    )
+
+def comment_new(request, object_id=None, form_instance=None):
+    form = CommentForm()
+    if object_id:
+        idea = get_object_or_404(Idea, pk=object_id)
+        form = CommentForm(instance=idea)
+
+    return render(
+        request, 
+        'comment_form.html',
+        {'form': form}
+    )
+    
 def idea_json(request, tag_name, object_id):
     queryset = Idea.objects.all()
     form = IdeaForm(initial={'tags':tag_name})

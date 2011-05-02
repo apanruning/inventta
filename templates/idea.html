@@ -9,6 +9,6 @@
                 {{object.created|date}}, 
                 <a title="permalink" class="permalink" href="{{object.get_absolute_url}}">#{{object.pk}}</a>
                 {{object.metadata}}
-                {% if user.is_staff %}<a href="{{object.get_absolute_url}}" class="edit">!</a>{% endif %}
+                {% if user.is_staff %}<a href="{{object.get_absolute_url}}/edit" >!</a>{% endif %}
             </details>
         </article>
