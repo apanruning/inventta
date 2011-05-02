@@ -1,0 +1,38 @@
+<h1><a href="/">../</a><a href="/comentario/">comentario/</a>nuevo</h1>
+{{form.errors}}
+<form id="comment-form" 
+      method="post"
+      action="{% if instance %}{{instance.get_absolute_url}}{%else%}{% url comment_list %}{% endif %}">
+    {% if request.user.is_staff %}
+    <input type="hidden" id="id_{{form.author.name}}" name="{{form.author.name}}" value="{{user}}" />
+    {% endif %}
+    <input type="hidden" name="next" value="{% url comment_list %}" />
+    {% csrf_token %}
+    <pre id="formating-help">
+    {{form.description.help_text|safe}}
+    </pre>
+
+    <div class="field {% if form.author.errors %}error{% endif %}" id="field_{{form.author.name}}" >
+        <label for="id_{{form.author.name}}">Su nombre</label> 
+        {{form.author}}
+        {% if request.user.is_staff %}
+            borrador? {{form.is_draft}}
+        {% endif %}
+    </div>
+
+    <div class="field required {% if form.description.errors %}error{% endif %}" id="field_{{form.description.name}}"> 
+        {{form.description.errors}}
+        <label for="id_{{form.description.name}}">Gracias por su opinión</label>
+        {{form.description}}
+    </div>
+    <div class="field required {% if form.honeypot.errors %}error{% endif %}" id="field_{{form.honeypot.name}}"> 
+        {{form.honeypot.errors}}
+        <label for="id_{{form.honeypot.name}}">honeypot</label> 
+        {{form.honeypot}}
+    </div>
+    <div class="clear submit">
+        <input name="save" type="submit" value="listo" /> 
+        <a href="/">cancelar</a> 
+    </div>
+
+</form>
