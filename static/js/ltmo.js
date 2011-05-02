@@ -23,24 +23,12 @@
         $("#main h1 a").pjax("#main section");
         $("#main h2 a").pjax("#main section");
         $("a.pjax").pjax("#main section");
-        $('.control').click(function(){
+        $('a.control').click(function(){
             target = $(this).attr('href');
             $(target).toggle('blind', 300);
             return false;
             
         });
-        $('.edit').click(function(){
-            url = $(this).attr('href')+'.json';
-            $.getJSON(url, function(data){
-                $('#idea-form').attr('action', url);
-                form_fields = $('#idea-form :input');
-                for (x in data) {
-                    $('#id_'+x).val(data[x]);
-                }
-            });
-            $('#new-idea').click();
-            return false;
-        })
         $('#login-form').submit(function(){
             data = $(this).serializeArray();
             action = $(this).attr('action');

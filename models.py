@@ -8,7 +8,7 @@ from django.contrib import admin
 from django.template.defaultfilters import striptags, slugify
 from markdown import markdown
 
-class Idea(models.Model):
+class Leak(models.Model):
     slug = models.SlugField(editable=False, blank=True, null=True)
     title = models.CharField(max_length=126, blank=True, null=True)
     description = models.TextField()
@@ -19,13 +19,12 @@ class Idea(models.Model):
     tags = TagField()
     metadata = models.TextField(default='', null=True, blank=True)
     is_draft = models.BooleanField(default=True)
+
+    class Meta:
+        abstract = True
     
     def __unicode__(self):
         return self.title or u'sin título'
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('idea_detail', [parse_tag_input(self.tags)[0], self.id])
 
     def save(self):
         self.rendered = markdown(
@@ -34,7 +33,14 @@ class Idea(models.Model):
         )
         self.tags = ','.join([slugify(x) for x in parse_tag_input(self.tags)])
         self.slug = '%s-%s' %(slugify(self.title[:30]) or 'sin-titulo', self.pk)
-        super(Idea, self).save()
+        super(Leak, self).save()
+        
+
+class Idea(Leak):
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('idea_detail', [parse_tag_input(self.tags)[0], self.id])
         
 class IdeaAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'tags','author', 'is_draft', 'created', 'changed')
@@ -43,7 +49,7 @@ class IdeaAdmin(admin.ModelAdmin):
 admin.site.register(Idea, IdeaAdmin)
 
 
-class Comment(Idea):
+class Comment(Leak):
     parent = models.ForeignKey('Idea', null=True)
     
     @models.permalink

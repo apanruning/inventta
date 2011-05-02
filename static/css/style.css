@@ -244,6 +244,9 @@ nav a{
     font-size:2em;
     padding: 0 0.5em;
 }
+nav a.section {
+    font: italic 2em 'Georgia MS', Georgia, serif;
+}
 nav a:hover {
     background: #EEE;
 }
@@ -347,6 +350,10 @@ input[type='submit']:active {
     position: absolute;
     left: -99999px;
     height:0;
+}
+#preview {
+    background: #EFEFEF;
+    padding: 1em 0;
 }
 .ui-autocomplete {
     list-style: none;

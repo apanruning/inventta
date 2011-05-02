@@ -34,5 +34,9 @@
         <input name="save" type="submit" value="listo" /> 
         <a href="/">cancelar</a> 
     </div>
-
 </form>
+<div id="preview">
+{% if instance %}
+{{instance.rendered|safe}}
+{% endif %}
+<div/>

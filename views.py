@@ -95,7 +95,7 @@ def idea_new(request, tag_name=None, object_id=None, form_instance=None):
     )
 
 def comment_list(request):
-    queryset = Comment.objects.all().order_by('pk')
+    queryset = Comment.objects.all().order_by('changed')
     if not request.user.is_staff:
         queryset = queryset.exclude(is_draft=True)
     form = CommentForm()
@@ -104,7 +104,9 @@ def comment_list(request):
         next = request.POST['next']
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = form.save()
+            comment = form.save(commit=False)
+            comment.tags = u'comentario,'
+            comment.save()
             messages.success(
                 request, 
                 u'Mensaje publicado con exito.'
@@ -130,7 +132,9 @@ def comment_detail(request, object_id):
         next = request.POST['next']
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
-            comment = form.save()
+            comment = form.save(commit=False)
+            comment.tags = u'comentario,'
+            comment.save()
             messages.success(request, 'Actualizaste el #%s' %(object_id))
             return redirect(next)
         else :
