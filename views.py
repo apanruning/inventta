@@ -156,13 +156,17 @@ def comment_detail(request, object_id):
 def comment_new(request, object_id=None, form_instance=None):
     form = CommentForm()
     if object_id:
-        idea = get_object_or_404(Idea, pk=object_id)
-        form = CommentForm(instance=idea)
-
+        comment = get_object_or_404(Comment, pk=object_id)
+        form = CommentForm(instance=comment)
+    else:
+        comment = None
     return render(
         request, 
         'comment_form.html',
-        {'form': form}
+        {
+            'form': form,
+            'instance': comment
+        }
     )
     
 def idea_json(request, tag_name, object_id):
